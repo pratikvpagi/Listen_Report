@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sustainability - Featherlite Theme</title>
+    <style>
+        /* Base Theme Colors (Derived from Featherlite image) */
+        :root {
+            --brand-red: #DE2820;
+            --text-dark: #3A3A3A;
+            --text-light: #7A7A7A;
+            --bg-cream: #F7F5F0;
+            --bg-white: #FFFFFF;
+            --border-light: #E0E0E0;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            color: var(--text-dark);
+            background-color: var(--bg-cream);
+            line-height: 1.6;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* --- Header & Navigation --- */
+        .top-bar {
+            background-color: var(--bg-white);
+            padding: 8px 48px;
+            font-size: 13px;
+            color: var(--text-light);
+            border-bottom: 1px solid var(--border-light);
+            display: flex;
+            gap: 16px;
+        }
+
+        .top-bar a:hover {
+            color: var(--brand-red);
+        }
+
+        .main-header {
+            background-color: var(--bg-white);
+            padding: 20px 48px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-family: "Arial Black", Arial, sans-serif;
+            font-size: 32px;
+            font-style: italic;
+            color: var(--brand-red);
+            font-weight: 900;
+            letter-spacing: -1px;
+            position: relative;
+        }
+        
+        .logo sup {
+            font-size: 14px;
+            position: absolute;
+            top: 5px;
+            right: -15px;
+        }
+
+        .search-container {
+            position: relative;
+            width: 250px;
+        }
+
+        .search-container input {
+            width: 100%;
+            padding: 10px 40px 10px 20px;
+            border-radius: 30px;
+            border: 1px solid var(--text-light);
+            font-size: 14px;
+            outline: none;
+        }
+
+        .search-container svg {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            fill: var(--text-dark);
+        }
+
+        .nav-menu {
+            background-color: var(--bg-white);
+            border-bottom: 1px solid var(--border-light);
+            padding: 0 48px;
+            display: flex;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-menu ul {
+            list-style: none;
+            margin: 0 auto;
+            padding: 0;
+            display: flex;
+            gap: 48px;
+        }
+
+        .nav-menu li a {
+            display: block;
+            padding: 20px 0;
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--text-light);
+            transition: color 0.2s;
+        }
+
+        .nav-menu li a:hover,
+        .nav-menu li.active a {
+            color: var(--brand-red);
+        }
+
+        /* --- Main Content Container --- */
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 24px;
+        }
+
+        /* --- Hero Section --- */
+        .hero {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end; 
+            min-height: 350px;
+            margin-bottom: 60px;
+            background-image: url('data:image/svg+xml;utf8,<svg width="400" height="400" xmlns="http://www.w3.org/2000/svg"><path d="M10,200 Q150,50 300,200 T390,300" fill="none" stroke="%23E8E5DF" stroke-width="40"/></svg>');
+            background-repeat: no-repeat;
+            background-position: left center;
+        }
+
+        .hero-text {
+            max-width: 550px;
+            text-align: right;
+        }
+
+        .hero h1 {
+            font-size: 56px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin: 0 0 16px 0;
+            line-height: 1.1;
+        }
+
+        .hero p {
+            font-size: 22px;
+            color: var(--text-light);
+            margin: 0 0 32px 0;
+            font-weight: 400;
+        }
+
+        .pill-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            border: 1px solid var(--text-dark);
+            padding: 12px 32px;
+            border-radius: 50px;
+            font-weight: 500;
+            font-size: 16px;
+            color: var(--text-dark);
+            background: transparent;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .pill-btn:hover {
+            background-color: var(--text-dark);
+            color: var(--bg-white);
+        }
+
+        /* --- Interactive Flip Cards --- */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 32px;
+            margin-bottom: 80px;
+        }
+
+        .card-container {
+            perspective: 1000px;
+            aspect-ratio: 1 / 0.8;
+            cursor: pointer;
+        }
+
+        .card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-style: preserve-3d;
+        }
+
+        .card-container.flipped .card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 16px;
+            padding: 32px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card-front {
+            background-color: var(--bg-white); 
+            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+            border: 1px solid var(--border-light);
+        }
+
+        .card-back {
+            background-color: var(--text-dark);
+            color: var(--bg-white);
+            transform: rotateY(180deg);
+            border-radius: 16px;
+        }
+
+        .card-front h2 {
+            font-size: 48px;
+            margin: 0;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .card-front p {
+            font-size: 16px;
+            margin: 0;
+            color: var(--text-light);
+            font-weight: 500;
+        }
+
+        .card-back p {
+            font-size: 16px;
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        .flip-btn {
+            align-self: flex-end;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: inherit;
+        }
+
+        /* --- Action Tiles --- */
+        .action-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 24px;
+        }
+
+        .action-tile {
+            border-radius: 20px;
+            padding: 40px 32px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+        }
+
+        .tile-read { background-color: #E2ECD8; }
+        .tile-ask { background-color: #DCE5F2; }
+        .tile-learn { background-color: #F8ECD5; }
+        .tile-listen { background-color: #F1DBD9; }
+
+        .action-tile h3 {
+            font-size: 32px;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin: 0 0 16px 0;
+        }
+
+        .action-tile p {
+            font-size: 16px;
+            color: var(--text-dark);
+            margin: 0 0 32px 0;
+            flex-grow: 1;
+            opacity: 0.8;
+        }
+
+        .action-btn {
+            display: inline-block;
+            background: transparent;
+            color: var(--text-dark);
+            font-family: inherit;
+            font-size: inherit;
+            border: 1px solid var(--text-dark);
+            padding: 10px 24px;
+            border-radius: 30px; 
+            font-weight: 500;
+            align-self: flex-start;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+
+        .action-btn:hover {
+            background: var(--text-dark);
+            color: var(--bg-white);
+        }
+
+        /* --- Responsive --- */
+        @media (max-width: 900px) {
+            .nav-menu ul { gap: 20px; overflow-x: auto; }
+            .hero { justify-content: center; background-image: none; text-align: center; }
+            .hero-text { text-align: center; }
+            .main-header { flex-direction: column; gap: 20px; }
+            .top-bar { justify-content: center; flex-wrap: wrap; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <a href="#">Contact</a> | 
+        <a href="#">Careers</a> | 
+        <a href="#">Find a store</a> | 
+        <a href="#">Become a Dealer</a>
+    </div>
+
+    <!-- Main Header -->
+    <header class="main-header">
+        <div class="logo">
+            Featherlite<sup>&reg;</sup>
+        </div>
+        <div class="search-container">
+            <input type="text" placeholder="Search">
+            <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20"><path d="M765-144 526-383q-30 22-65.792 34.5T384.035-336Q284-336 214-406t-70-170q0-100 70-170t170-70q100 0 170 70t70 170.035q0 40.381-12.5 76.173T577-434l239 239-51 51ZM384-408q70 0 119-49t49-119q0-70-49-119t-119-49q-70 0-119 49t-49 119q0 70 49 119t119 49Z"/></svg>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="nav-menu">
+        <ul>
+            <li><a href="#">Shop Online</a></li>
+            <li><a href="#">Products v</a></li>
+            <li><a href="#">Our Projects</a></li>
+            <li><a href="#">Resources v</a></li>
+            <li><a href="#">About Us</a></li>
+            <li class="active"><a href="#">Sustainability</a></li>
+            <li><a href="#">Thought Hub</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-text">
+                <h1>Sustainability</h1>
+                <p>On track to meet our Scope 2 SBTi carbon neutrality targets well ahead of 2030.</p>
+                <button class="pill-btn">
+                    <span>←</span> See Report
+                </button>
+            </div>
+        </section>
+
+        <!-- Interactive Flip Cards with Featherlite Data -->
+        <section class="stats-grid">
+            <div class="card-container" onclick="this.classList.toggle('flipped')">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <div>
+                            <h2>87.45%</h2>
+                            <p>Reduction in Emission Intensity</p>
+                        </div>
+                        <button class="flip-btn">→</button>
+                    </div>
+                    <div class="card-back">
+                        <p>We achieved an extraordinary 87.45% reduction in our Scope 1 & 2 (market-based) emissions intensity in FY25 compared to our FY22 baseline.</p>
+                        <button class="flip-btn">✕</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-container" onclick="this.classList.toggle('flipped')">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <div>
+                            <h2>100%</h2>
+                            <p>Green Electricity for Manufacturing</p>
+                        </div>
+                        <button class="flip-btn">→</button>
+                    </div>
+                    <div class="card-back">
+                        <p>In FY24 and FY25, we achieved Scope 2 carbon neutrality by powering our manufacturing operations entirely with 100% renewable energy.</p>
+                        <button class="flip-btn">✕</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-container" onclick="this.classList.toggle('flipped')">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <div>
+                            <h2>>90%</h2>
+                            <p>Waste Diverted from Landfills</p>
+                        </div>
+                        <button class="flip-btn">→</button>
+                    </div>
+                    <div class="card-back">
+                        <p>Driven by our Zero Waste to Landfill commitment, over 90% of our waste is successfully diverted through rigorous recycling and circular economy practices.</p>
+                        <button class="flip-btn">✕</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Action Tiles Updated for Featherlite -->
+        <section class="action-grid">
+            <div class="action-tile tile-read">
+                <h3>Read</h3>
+                <p>Dive deep into our FY25 Sustainability Report and our detailed ESG framework.</p>
+                <a href="#" class="action-btn">Read now</a>
+            </div>
+
+            <div class="action-tile tile-ask">
+                <h3>Discover</h3>
+                <p>Learn how our Life Cycle Thinking creates products designed for durability and circularity.</p>
+                <a href="#" class="action-btn">Explore Design</a>
+            </div>
+
+            <div class="action-tile tile-learn">
+                <h3>Explore</h3>
+                <p>Tour our manufacturing spaces, recognized with IGBC Gold and GreenCo Gold certifications.</p>
+                <a href="#" class="action-btn">View Facilities</a>
+            </div>
+
+            <div class="action-tile tile-listen">
+                <h3>Listen</h3>
+                <p>Hear a brief overview of our journey towards Net-Zero carbon emissions by 2040.</p>
+                <button id="listen-btn" class="action-btn">▶ Listen now</button>
+                <audio id="sustainability-audio" src="/The_Physics_of_Featherlite_s_Circular_Furniture.m4a" preload="none"></audio>
+            </div>
+        </section>
+    </main>
+
+    <!-- Script to handle audio playback -->
+    <script>
+        const listenBtn = document.getElementById('listen-btn');
+        const audioPlayer = document.getElementById('sustainability-audio');
+
+        listenBtn.addEventListener('click', () => {
+            if (audioPlayer.paused) {
+                audioPlayer.play();
+                listenBtn.innerHTML = '⏸ Pause';
+            } else {
+                audioPlayer.pause();
+                listenBtn.innerHTML = '▶ Listen now';
+            }
+        });
+
+        // Reset the button text automatically when the audio finishes
+        audioPlayer.addEventListener('ended', () => {
+            listenBtn.innerHTML = '▶ Listen now';
+        });
+    </script>
+</body>
+</html>
