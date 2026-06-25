@@ -3,483 +3,424 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sustainability - Featherlite Theme</title>
+    <title>Sustainability - Featherlite</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
     <style>
-        /* Base Theme Colors (Derived from Featherlite image) */
+        /* --- Base Variables --- */
         :root {
             --brand-red: #DE2820;
-            --text-dark: #3A3A3A;
-            --text-light: #7A7A7A;
-            --bg-cream: #F7F5F0;
-            --bg-white: #FFFFFF;
-            --border-light: #E0E0E0;
+            --text-dark: #1A1A1A;
+            --text-gray: #5A5A5A;
+            --text-light: #8A8A8A;
+            --bg-body: #F9F8F6;
+            --bg-surface: #FFFFFF;
+            --border-light: rgba(0, 0, 0, 0.08);
+            --shadow-sm: 0 4px 20px rgba(0, 0, 0, 0.03);
+            --shadow-md: 0 10px 30px rgba(0, 0, 0, 0.06);
+            --shadow-hover: 0 20px 40px rgba(222, 40, 32, 0.08);
+            --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         body {
             margin: 0;
-            font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-family: 'Plus Jakarta Sans', sans-serif;
             color: var(--text-dark);
-            background-color: var(--bg-cream);
+            background-color: transparent; 
             line-height: 1.6;
+            overflow-x: hidden;
         }
 
-        * {
-            box-sizing: border-box;
+        * { box-sizing: border-box; }
+        a { text-decoration: none; color: inherit; }
+
+        /* --- Animations --- */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        a {
-            text-decoration: none;
-            color: inherit;
+        /* --- Full Page Interactive Background --- */
+        #interactive-bg {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            z-index: -10; 
+            pointer-events: none; 
+            overflow: hidden;
+            background-color: var(--bg-body); 
         }
+
+        .icon-particle {
+            position: absolute;
+            will-change: transform;
+        }
+
+        /* --- Top Bar --- */
+        .top-bar {
+            background-color: var(--text-dark);
+            padding: 8px 48px;
+            font-size: 12px;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.7);
+            display: flex;
+            justify-content: flex-end;
+            gap: 24px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+        .top-bar a:hover { color: var(--bg-surface); }
 
         /* --- Header & Navigation --- */
-        .top-bar {
-            background-color: var(--bg-white);
-            padding: 8px 48px;
-            font-size: 13px;
-            color: var(--text-light);
-            border-bottom: 1px solid var(--border-light);
-            display: flex;
-            gap: 16px;
-        }
-
-        .top-bar a:hover {
-            color: var(--brand-red);
-        }
-
         .main-header {
-            background-color: var(--bg-white);
-            padding: 20px 48px;
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 24px 48px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-        }
-
-        .logo {
-            font-family: "Arial Black", Arial, sans-serif;
-            font-size: 32px;
-            font-style: italic;
-            color: var(--brand-red);
-            font-weight: 900;
-            letter-spacing: -1px;
             position: relative;
-        }
-        
-        .logo sup {
-            font-size: 14px;
-            position: absolute;
-            top: 5px;
-            right: -15px;
+            z-index: 10;
         }
 
-        .search-container {
-            position: relative;
-            width: 250px;
-        }
+        .logo { font-size: 34px; font-style: italic; color: var(--brand-red); font-weight: 800; letter-spacing: -1.5px; position: relative; }
+        .logo sup { font-size: 14px; position: absolute; top: 6px; right: -16px; font-style: normal; }
 
+        .search-container { position: relative; width: 280px; }
         .search-container input {
-            width: 100%;
-            padding: 10px 40px 10px 20px;
-            border-radius: 30px;
-            border: 1px solid var(--text-light);
-            font-size: 14px;
-            outline: none;
+            width: 100%; padding: 12px 40px 12px 24px; border-radius: 40px;
+            border: 1px solid var(--border-light); background: var(--bg-body);
+            font-family: inherit; font-size: 14px; outline: none; transition: var(--transition-smooth);
         }
-
-        .search-container svg {
-            position: absolute;
-            right: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            fill: var(--text-dark);
-        }
+        .search-container input:focus { background: var(--bg-surface); border-color: var(--brand-red); box-shadow: 0 0 0 4px rgba(222, 40, 32, 0.1); }
+        .search-container svg { position: absolute; right: 16px; top: 50%; transform: translateY(-50%); fill: var(--text-light); transition: var(--transition-smooth); }
+        .search-container input:focus + svg { fill: var(--brand-red); }
 
         .nav-menu {
-            background-color: var(--bg-white);
-            border-bottom: 1px solid var(--border-light);
-            padding: 0 48px;
-            display: flex;
-            justify-content: space-between;
-            position: sticky;
-            top: 0;
-            z-index: 100;
+            background-color: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-light); padding: 0 48px; position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 20px rgba(0,0,0,0.02);
         }
-
-        .nav-menu ul {
-            list-style: none;
-            margin: 0 auto;
-            padding: 0;
-            display: flex;
-            gap: 48px;
-        }
-
-        .nav-menu li a {
-            display: block;
-            padding: 20px 0;
-            font-size: 15px;
-            font-weight: 500;
-            color: var(--text-light);
-            transition: color 0.2s;
-        }
-
-        .nav-menu li a:hover,
-        .nav-menu li.active a {
-            color: var(--brand-red);
-        }
+        .nav-menu ul { list-style: none; margin: 0 auto; padding: 0; display: flex; justify-content: center; gap: 56px; }
+        .nav-menu li a { display: block; padding: 24px 0; font-size: 14px; font-weight: 600; color: var(--text-gray); position: relative; transition: var(--transition-smooth); }
+        .nav-menu li a::after { content: ''; position: absolute; bottom: -1px; left: 0; width: 0; height: 2px; background-color: var(--brand-red); transition: var(--transition-smooth); }
+        .nav-menu li a:hover, .nav-menu li.active a { color: var(--text-dark); }
+        .nav-menu li a:hover::after, .nav-menu li.active a::after { width: 100%; }
 
         /* --- Main Content Container --- */
-        main {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 60px 24px;
-        }
+        main { max-width: 1280px; margin: 0 auto; padding: 80px 24px; position: relative; z-index: 1; }
 
-        /* --- Hero Section --- */
+        /* --- Fancy Hero Section --- */
         .hero {
-            display: flex;
-            align-items: center;
-            justify-content: flex-end; 
-            min-height: 350px;
-            margin-bottom: 60px;
-            background-image: url('data:image/svg+xml;utf8,<svg width="400" height="400" xmlns="http://www.w3.org/2000/svg"><path d="M10,200 Q150,50 300,200 T390,300" fill="none" stroke="%23E8E5DF" stroke-width="40"/></svg>');
-            background-repeat: no-repeat;
-            background-position: left center;
+            display: flex; align-items: center; justify-content: space-between;
+            min-height: 450px; margin-bottom: 100px; position: relative;
+            animation: fadeUp 0.8s ease-out;
         }
 
-        .hero-text {
-            max-width: 550px;
-            text-align: right;
+        .hero-text { max-width: 600px; padding-left: 24px; position: relative; z-index: 2; }
+        .hero-tag {
+            display: inline-block; padding: 6px 16px; background: rgba(222, 40, 32, 0.1);
+            color: var(--brand-red); font-size: 13px; font-weight: 700; border-radius: 30px;
+            margin-bottom: 24px; letter-spacing: 1px; text-transform: uppercase;
         }
-
-        .hero h1 {
-            font-size: 56px;
-            font-weight: 700;
-            color: var(--text-dark);
-            margin: 0 0 16px 0;
-            line-height: 1.1;
-        }
-
-        .hero p {
-            font-size: 22px;
-            color: var(--text-light);
-            margin: 0 0 32px 0;
-            font-weight: 400;
-        }
+        .hero h1 { font-size: 64px; font-weight: 800; color: var(--text-dark); margin: 0 0 24px 0; line-height: 1.05; letter-spacing: -2px; }
+        .hero p { font-size: 20px; color: var(--text-gray); margin: 0 0 40px 0; font-weight: 400; line-height: 1.6; }
 
         .pill-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            border: 1px solid var(--text-dark);
-            padding: 12px 32px;
-            border-radius: 50px;
-            font-weight: 500;
-            font-size: 16px;
-            color: var(--text-dark);
-            background: transparent;
-            cursor: pointer;
-            transition: all 0.2s ease;
+            display: inline-flex; align-items: center; gap: 12px; background: var(--text-dark);
+            color: var(--bg-surface); padding: 16px 36px; border-radius: 50px; border: none;
+            font-weight: 600; font-size: 16px; cursor: pointer; transition: var(--transition-smooth); font-family: inherit;
         }
-
-        .pill-btn:hover {
-            background-color: var(--text-dark);
-            color: var(--bg-white);
-        }
+        .pill-btn span { transition: transform 0.3s ease; }
+        .pill-btn:hover { background: var(--brand-red); transform: translateY(-2px); box-shadow: 0 10px 20px rgba(222, 40, 32, 0.2); }
+        .pill-btn:hover span { transform: translateX(-4px); }
 
         /* --- Interactive Flip Cards --- */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 32px;
-            margin-bottom: 80px;
-        }
-
-        .card-container {
-            perspective: 1000px;
-            aspect-ratio: 1 / 0.8;
-            cursor: pointer;
-        }
-
-        .card-inner {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-            transform-style: preserve-3d;
-        }
-
-        .card-container.flipped .card-inner {
-            transform: rotateY(180deg);
-        }
-
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 32px; margin-bottom: 120px; animation: fadeUp 1s ease-out 0.2s both; }
+        .card-container { perspective: 1500px; aspect-ratio: 1 / 0.85; cursor: pointer; }
+        .card-inner { position: relative; width: 100%; height: 100%; transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275); transform-style: preserve-3d; }
+        .card-container.flipped .card-inner { transform: rotateY(180deg); }
         .card-front, .card-back {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            backface-visibility: hidden;
-            border-radius: 16px;
-            padding: 32px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+            position: absolute; width: 100%; height: 100%; backface-visibility: hidden;
+            border-radius: 24px; padding: 40px; display: flex; flex-direction: column; justify-content: space-between;
         }
-
-        .card-front {
-            background-color: var(--bg-white); 
-            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
-            border: 1px solid var(--border-light);
-        }
-
-        .card-back {
-            background-color: var(--text-dark);
-            color: var(--bg-white);
-            transform: rotateY(180deg);
-            border-radius: 16px;
-        }
-
+        .card-front { background-color: var(--bg-surface); box-shadow: var(--shadow-sm); border: 1px solid var(--border-light); transition: var(--transition-smooth); }
+        .card-container:hover .card-front { box-shadow: var(--shadow-hover); border-color: rgba(222, 40, 32, 0.2); }
+        .card-back { background: linear-gradient(145deg, var(--text-dark), #2a2a2a); color: var(--bg-surface); transform: rotateY(180deg); box-shadow: var(--shadow-md); }
         .card-front h2 {
-            font-size: 48px;
-            margin: 0;
-            font-weight: 700;
-            color: var(--text-dark);
+            font-size: 56px; margin: 0; font-weight: 800;
+            background: linear-gradient(90deg, var(--brand-red), #ff5e57);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: -1px;
         }
-
-        .card-front p {
-            font-size: 16px;
-            margin: 0;
-            color: var(--text-light);
-            font-weight: 500;
-        }
-
-        .card-back p {
-            font-size: 16px;
-            margin: 0;
-            line-height: 1.6;
-        }
+        .card-front p { font-size: 18px; margin: 8px 0 0 0; color: var(--text-gray); font-weight: 500; }
+        .card-back p { font-size: 17px; margin: 0; line-height: 1.7; font-weight: 300; opacity: 0.9; }
 
         .flip-btn {
-            align-self: flex-end;
-            background: none;
-            border: none;
-            font-size: 24px;
-            cursor: pointer;
-            color: inherit;
+            align-self: flex-end; background: rgba(0,0,0,0.05); border: none; width: 48px; height: 48px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; font-size: 20px; cursor: pointer; color: var(--text-dark); transition: var(--transition-smooth);
         }
+        .card-front .flip-btn:hover { background: var(--brand-red); color: white; transform: translateX(4px); }
+        .card-back .flip-btn { background: rgba(255,255,255,0.1); color: white; }
+        .card-back .flip-btn:hover { background: white; color: var(--text-dark); transform: rotate(90deg); }
 
         /* --- Action Tiles --- */
-        .action-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 24px;
-        }
-
+        .section-title { font-size: 32px; font-weight: 700; margin-bottom: 40px; text-align: center; animation: fadeUp 1s ease-out 0.4s both; }
+        .action-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; animation: fadeUp 1s ease-out 0.6s both; }
         .action-tile {
-            border-radius: 20px;
-            padding: 40px 32px;
-            display: flex;
-            flex-direction: column;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+            border-radius: 24px; padding: 40px 32px; display: flex; flex-direction: column; position: relative;
+            overflow: hidden; background: var(--bg-surface); box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-light); transition: var(--transition-smooth); z-index: 1;
         }
+        .tile-read::before { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(226, 236, 216, 0.4) 0%, transparent 100%); z-index: -1; }
+        .tile-ask::before { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(220, 229, 242, 0.4) 0%, transparent 100%); z-index: -1; }
+        .tile-learn::before { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(248, 236, 213, 0.4) 0%, transparent 100%); z-index: -1; }
+        .tile-listen::before { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(241, 219, 217, 0.4) 0%, transparent 100%); z-index: -1; }
 
-        .tile-read { background-color: #E2ECD8; }
-        .tile-ask { background-color: #DCE5F2; }
-        .tile-learn { background-color: #F8ECD5; }
-        .tile-listen { background-color: #F1DBD9; }
-
-        .action-tile h3 {
-            font-size: 32px;
-            font-weight: 600;
-            color: var(--text-dark);
-            margin: 0 0 16px 0;
-        }
-
-        .action-tile p {
-            font-size: 16px;
-            color: var(--text-dark);
-            margin: 0 0 32px 0;
-            flex-grow: 1;
-            opacity: 0.8;
-        }
+        .action-tile:hover { transform: translateY(-8px); box-shadow: var(--shadow-md); border-color: rgba(0,0,0,0.15); }
+        .action-tile h3 { font-size: 28px; font-weight: 700; color: var(--text-dark); margin: 0 0 16px 0; }
+        .action-tile p { font-size: 15px; color: var(--text-gray); margin: 0 0 40px 0; flex-grow: 1; line-height: 1.6; }
 
         .action-btn {
-            display: inline-block;
-            background: transparent;
-            color: var(--text-dark);
-            font-family: inherit;
-            font-size: inherit;
-            border: 1px solid var(--text-dark);
-            padding: 10px 24px;
-            border-radius: 30px; 
-            font-weight: 500;
-            align-self: flex-start;
-            cursor: pointer;
-            transition: all 0.2s;
-            text-decoration: none;
+            display: inline-flex; align-items: center; justify-content: center; background: transparent; color: var(--text-dark);
+            font-family: inherit; font-size: 14px; border: 1.5px solid var(--border-light); padding: 12px 28px; border-radius: 40px;
+            font-weight: 600; align-self: flex-start; cursor: pointer; transition: var(--transition-smooth); text-decoration: none;
         }
+        .action-tile:hover .action-btn { border-color: var(--text-dark); }
+        .action-btn:hover, #listen-btn:hover { background: var(--text-dark); color: var(--bg-surface); }
+        
+        #listen-btn.playing { background: var(--brand-red); border-color: var(--brand-red); color: white; animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(222, 40, 32, 0.4); } 70% { box-shadow: 0 0 0 10px rgba(222, 40, 32, 0); } 100% { box-shadow: 0 0 0 0 rgba(222, 40, 32, 0); } }
 
-        .action-btn:hover {
-            background: var(--text-dark);
-            color: var(--bg-white);
-        }
-
-        /* --- Responsive --- */
-        @media (max-width: 900px) {
-            .nav-menu ul { gap: 20px; overflow-x: auto; }
-            .hero { justify-content: center; background-image: none; text-align: center; }
-            .hero-text { text-align: center; }
-            .main-header { flex-direction: column; gap: 20px; }
-            .top-bar { justify-content: center; flex-wrap: wrap; }
+        @media (max-width: 992px) {
+            .hero { flex-direction: column; text-align: center; justify-content: center; padding-top: 40px; }
+            .hero-text { padding-left: 0; margin-bottom: 40px; }
+            .nav-menu ul { justify-content: flex-start; overflow-x: auto; padding-bottom: 8px; white-space: nowrap; }
+            .nav-menu li a { padding: 16px 0; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Top Bar -->
+    <div id="interactive-bg"></div>
+
     <div class="top-bar">
-        <a href="#">Contact</a> | 
-        <a href="#">Careers</a> | 
-        <a href="#">Find a store</a> | 
-        <a href="#">Become a Dealer</a>
+        <a href="#">Contact</a> <a href="#">Careers</a> <a href="#">Find a store</a> <a href="#">Become a Dealer</a>
     </div>
 
-    <!-- Main Header -->
     <header class="main-header">
-        <div class="logo">
-            Featherlite<sup>&reg;</sup>
-        </div>
+        <div class="logo">Featherlite<sup>&reg;</sup></div>
         <div class="search-container">
-            <input type="text" placeholder="Search">
+            <input type="text" placeholder="Search for products, resources...">
             <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20"><path d="M765-144 526-383q-30 22-65.792 34.5T384.035-336Q284-336 214-406t-70-170q0-100 70-170t170-70q100 0 170 70t70 170.035q0 40.381-12.5 76.173T577-434l239 239-51 51ZM384-408q70 0 119-49t49-119q0-70-49-119t-119-49q-70 0-119 49t-49 119q0 70 49 119t119 49Z"/></svg>
         </div>
     </header>
 
-    <!-- Navigation -->
     <nav class="nav-menu">
         <ul>
-            <li><a href="#">Shop Online</a></li>
-            <li><a href="#">Products v</a></li>
-            <li><a href="#">Our Projects</a></li>
-            <li><a href="#">Resources v</a></li>
-            <li><a href="#">About Us</a></li>
-            <li class="active"><a href="#">Sustainability</a></li>
+            <li><a href="#">Shop Online</a></li> <li><a href="#">Products</a></li> <li><a href="#">Our Projects</a></li>
+            <li><a href="#">Resources</a></li> <li><a href="#">About Us</a></li> <li class="active"><a href="#">Sustainability</a></li>
             <li><a href="#">Thought Hub</a></li>
         </ul>
     </nav>
 
     <main>
-        <!-- Hero Section -->
         <section class="hero">
             <div class="hero-text">
-                <h1>Sustainability</h1>
-                <p>On track to meet our Scope 2 SBTi carbon neutrality targets well ahead of 2030.</p>
-                <button class="pill-btn">
-                    <span>←</span> See Report
-                </button>
+                <span class="hero-tag">Environment First</span>
+                <h1>Engineering a<br>Greener Future</h1>
+                <p>On track to meet our Scope 2 SBTi carbon neutrality targets well ahead of 2030, designing furniture that respects the planet.</p>
+                <button class="pill-btn"><span>←</span> Read The Full Report</button>
             </div>
         </section>
 
-        <!-- Interactive Flip Cards with Featherlite Data -->
         <section class="stats-grid">
             <div class="card-container" onclick="this.classList.toggle('flipped')">
                 <div class="card-inner">
-                    <div class="card-front">
-                        <div>
-                            <h2>87.45%</h2>
-                            <p>Reduction in Emission Intensity</p>
-                        </div>
-                        <button class="flip-btn">→</button>
-                    </div>
-                    <div class="card-back">
-                        <p>We achieved an extraordinary 87.45% reduction in our Scope 1 & 2 (market-based) emissions intensity in FY25 compared to our FY22 baseline.</p>
-                        <button class="flip-btn">✕</button>
-                    </div>
+                    <div class="card-front"><div><h2>87.4%</h2><p>Reduction in Emission Intensity</p></div><button class="flip-btn">→</button></div>
+                    <div class="card-back"><p>We achieved an extraordinary 87.45% reduction in our Scope 1 & 2 (market-based) emissions intensity in FY25 compared to our FY22 baseline.</p><button class="flip-btn">✕</button></div>
                 </div>
             </div>
-
             <div class="card-container" onclick="this.classList.toggle('flipped')">
                 <div class="card-inner">
-                    <div class="card-front">
-                        <div>
-                            <h2>100%</h2>
-                            <p>Green Electricity for Manufacturing</p>
-                        </div>
-                        <button class="flip-btn">→</button>
-                    </div>
-                    <div class="card-back">
-                        <p>In FY24 and FY25, we achieved Scope 2 carbon neutrality by powering our manufacturing operations entirely with 100% renewable energy.</p>
-                        <button class="flip-btn">✕</button>
-                    </div>
+                    <div class="card-front"><div><h2>100%</h2><p>Green Energy Manufacturing</p></div><button class="flip-btn">→</button></div>
+                    <div class="card-back"><p>In FY24 and FY25, we achieved Scope 2 carbon neutrality by powering our manufacturing operations entirely with 100% renewable energy.</p><button class="flip-btn">✕</button></div>
                 </div>
             </div>
-
             <div class="card-container" onclick="this.classList.toggle('flipped')">
                 <div class="card-inner">
-                    <div class="card-front">
-                        <div>
-                            <h2>>90%</h2>
-                            <p>Waste Diverted from Landfills</p>
-                        </div>
-                        <button class="flip-btn">→</button>
-                    </div>
-                    <div class="card-back">
-                        <p>Driven by our Zero Waste to Landfill commitment, over 90% of our waste is successfully diverted through rigorous recycling and circular economy practices.</p>
-                        <button class="flip-btn">✕</button>
-                    </div>
+                    <div class="card-front"><div><h2>>90%</h2><p>Waste Diverted from Landfills</p></div><button class="flip-btn">→</button></div>
+                    <div class="card-back"><p>Driven by our Zero Waste to Landfill commitment, over 90% of our waste is successfully diverted through rigorous recycling and circular economy practices.</p><button class="flip-btn">✕</button></div>
                 </div>
             </div>
         </section>
 
-        <!-- Action Tiles Updated for Featherlite -->
+        <h2 class="section-title">Engage With Our Progress</h2>
         <section class="action-grid">
             <div class="action-tile tile-read">
-                <h3>Read</h3>
-                <p>Dive deep into our FY25 Sustainability Report and our detailed ESG framework.</p>
-                <a href="#" class="action-btn">Read now</a>
+                <h3>Read</h3><p>Dive deep into our FY25 Sustainability Report and explore our detailed ESG framework in action.</p><a href="#" class="action-btn">Read the Report</a>
             </div>
-
             <div class="action-tile tile-ask">
-                <h3>Discover</h3>
-                <p>Learn how our Life Cycle Thinking creates products designed for durability and circularity.</p>
-                <a href="#" class="action-btn">Explore Design</a>
+                <h3>Discover</h3><p>Learn how our Life Cycle Thinking creates products uniquely designed for durability and true circularity.</p><a href="#" class="action-btn">Explore Design</a>
             </div>
-
             <div class="action-tile tile-learn">
-                <h3>Explore</h3>
-                <p>Tour our manufacturing spaces, recognized with IGBC Gold and GreenCo Gold certifications.</p>
-                <a href="#" class="action-btn">View Facilities</a>
+                <h3>Explore</h3><p>Tour our world-class manufacturing spaces, recognized with IGBC Gold and GreenCo Gold certifications.</p><a href="#" class="action-btn">View Facilities</a>
             </div>
- 
-            
             <div class="action-tile tile-listen">
-                <h3>Listen</h3>
-                <p>Hear a brief overview of our journey towards Net-Zero carbon emissions by 2040.</p>
+                <h3>Listen</h3><p>Hear a brief, immersive overview of our ongoing journey towards Net-Zero carbon emissions by 2040.</p>
                 <button id="listen-btn" class="action-btn">▶ Listen now</button>
                 <audio id="sustainability-audio" src="ElevenLabs_2026-06-25T05_20_27_Ravi - Gentle and Informative_pvc_sp100_s50_sb75_v3.mp3" preload="none"></audio>
             </div>
         </section>
     </main>
 
-    <!-- Script to handle audio playback -->
     <script>
+        // --- Audio Button Logic ---
         const listenBtn = document.getElementById('listen-btn');
         const audioPlayer = document.getElementById('sustainability-audio');
 
         listenBtn.addEventListener('click', () => {
             if (audioPlayer.paused) {
                 audioPlayer.play();
-                listenBtn.innerHTML = '⏸ Pause';
+                listenBtn.innerHTML = '⏸ Pause Audio';
+                listenBtn.classList.add('playing');
             } else {
                 audioPlayer.pause();
                 listenBtn.innerHTML = '▶ Listen now';
+                listenBtn.classList.remove('playing');
             }
         });
 
-        // Reset the button text automatically when the audio finishes
         audioPlayer.addEventListener('ended', () => {
             listenBtn.innerHTML = '▶ Listen now';
+            listenBtn.classList.remove('playing');
         });
+
+        // --- Interactive Particle Background Logic ---
+        const bgContainer = document.getElementById('interactive-bg');
+        
+        // Clipart-style SVGs (Trees, Tables, Chairs, Leaves, Plants, Recycle, Earth)
+        const iconsPaths = [
+            '<path d="M12 2L6 10H9L5 18H10V22H14V18H19L15 10H18L12 2Z" />', // Pine Tree
+            '<path d="M2 6H22V9H20V22H17V9H7V22H4V9H2V6Z" />', // Office Desk / Table
+            '<path d="M15 14H9V22H15V14M12 2C15 2 18 5 18 9C18 11.4 16.5 13.4 14.5 14H9.5C7.5 13.4 6 11.4 6 9C6 5 9 2 12 2Z" />', // Potted Plant
+            '<path d="M17,8C8,10 5.9,16.17 3.82,21.34L5.71,22L6.66,19.7C7.14,19.87 7.64,20 8,20C19,20 22,3 22,3C21,5 14,5.25 9,6.25C4,7.25 2,11.5 2,13.5C2,15.5 3.75,17.25 3.75,17.25C7,8 17,8 17,8Z"/>', // Eco Leaf 1
+            '<path d="M12,22A2,2 0 0,1 10,20A2,2 0 0,1 12,18A2,2 0 0,1 14,20A2,2 0 0,1 12,22M17,20H20V21.5H17V20M4,20H7V21.5H4V20M8.19,16.73L9.66,15.26L11,16.63V13H13V16.63L14.34,15.26L15.81,16.73L13,19.53V20A1,1 0 0,0 12,21A1,1 0 0,0 11,20V19.53L8.19,16.73M7,14V4A2,2 0 0,1 9,2H15A2,2 0 0,1 17,4V14A2,2 0 0,1 15,16H9A2,2 0 0,1 7,14M9,14H15V4H9V14Z"/>', // Office Chair
+            '<path d="M22 13V19H21L19 17H11V19H10L8 21H6L7.5 19.5C4.24 18.25 2 15.39 2 12C2 7.58 5.58 4 10 4C11.39 4 12.69 4.35 13.84 4.96L16.29 2.5L17.71 3.93L15.04 6.6C16.89 7.82 18 9.8 18 12C18 13.11 17.76 14.16 17.33 15.11L21 18.78V13H22M10 6C6.69 6 4 8.69 4 12C4 14.92 6.09 17.37 8.87 17.9L16 10.74C15.86 8.08 13.18 6 10 6Z"/>', // Leaf 2
+            '<path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M11,10V14.5L14.5,12.5L11,10M17.15,10.63L15.42,11.63L16.42,13.36L18.15,12.36L17.15,10.63M6.85,10.63L5.85,12.36L7.58,13.36L8.58,11.63L6.85,10.63M12,5.5L10.5,8H13.5L12,5.5M10.5,16L12,18.5L13.5,16H10.5Z"/>', // Globe
+        ];
+
+        // Adjusted palette with richer greens
+        const vibrantGreenPalette = [
+            '#2E7D32', // Emerald Green
+            '#1B5E20', // Forest Green
+            '#388E3C', // Vibrant Green
+            '#4CAF50', // Brighter Green
+            '#00695C'  // Teal Green
+        ];
+        
+        const particles = [];
+        const numParticles = 75; // Large number for full page coverage
+
+        // Mouse tracking
+        let mouseX = window.innerWidth / 2;
+        let mouseY = window.innerHeight / 2;
+        
+        window.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+
+        // Initialize Particles over entire viewport
+        for (let i = 0; i < numParticles; i++) {
+            const el = document.createElement('div');
+            el.className = 'icon-particle';
+            
+            const size = Math.random() * 40 + 20; 
+            const startX = Math.random() * window.innerWidth;
+            const startY = Math.random() * window.innerHeight;
+            const speed = Math.random() * 0.04 + 0.01;
+            const floatOffset = Math.random() * Math.PI * 2;
+            const path = iconsPaths[Math.floor(Math.random() * iconsPaths.length)];
+            const color = vibrantGreenPalette[Math.floor(Math.random() * vibrantGreenPalette.length)];
+            
+            // INCREASED OPACITY (from ~10% up to 15-45%) so they are distinctly green
+            const opacity = Math.random() * 0.30 + 0.15; 
+
+            el.innerHTML = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" style="fill: ${color};"><g>${path}</g></svg>`;
+            el.style.opacity = opacity;
+            
+            bgContainer.appendChild(el);
+
+            particles.push({
+                el: el, baseX: startX, baseY: startY,
+                x: startX, y: startY, size: size,
+                speed: speed, floatOffset: floatOffset,
+                time: Math.random() * 100
+            });
+        }
+
+        // Animation Loop
+        function animate() {
+            particles.forEach(p => {
+                p.time += p.speed;
+                
+                // 1. Continuous floating pattern
+                const floatY = Math.sin(p.time) * 35;
+                const floatX = Math.cos(p.time * 0.7) * 20;
+
+                // 2. Parallax effect based on mouse position
+                const parallaxX = (window.innerWidth / 2 - mouseX) * p.speed * 0.8;
+                const parallaxY = (window.innerHeight / 2 - mouseY) * p.speed * 0.8;
+
+                // 3. Magnetic Repulsion (Interactive dodging)
+                let repulseX = 0;
+                let repulseY = 0;
+                
+                const particleCenterX = p.baseX + floatX + parallaxX + (p.size/2);
+                const particleCenterY = p.baseY + floatY + parallaxY + (p.size/2);
+                
+                const dx = mouseX - particleCenterX;
+                const dy = mouseY - particleCenterY;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+                const repulseRadius = 140;
+
+                if (distance < repulseRadius) {
+                    const force = (repulseRadius - distance) / repulseRadius;
+                    repulseX = -(dx / distance) * force * 70; 
+                    repulseY = -(dy / distance) * force * 70;
+                }
+
+                // Smooth out-of-bounds wrapping logic so they don't get lost
+                if (p.baseX > window.innerWidth + 100) p.baseX = -100;
+                else if (p.baseX < -100) p.baseX = window.innerWidth + 100;
+                
+                if (p.baseY > window.innerHeight + 100) p.baseY = -100;
+                else if (p.baseY < -100) p.baseY = window.innerHeight + 100;
+
+                // Target position
+                const targetX = p.baseX + floatX + parallaxX + repulseX;
+                const targetY = p.baseY + floatY + parallaxY + repulseY;
+
+                // Smooth Lerp
+                p.x += (targetX - p.x) * 0.08;
+                p.y += (targetY - p.y) * 0.08;
+
+                p.el.style.transform = `translate3d(${p.x}px, ${p.y}px, 0)`;
+            });
+
+            requestAnimationFrame(animate);
+        }
+
+        // Handle window resize dynamically so particles don't bunch up
+        window.addEventListener('resize', () => {
+            particles.forEach(p => {
+                p.baseX = Math.random() * window.innerWidth;
+                p.baseY = Math.random() * window.innerHeight;
+            });
+        });
+
+        animate();
     </script>
 </body>
 </html>
